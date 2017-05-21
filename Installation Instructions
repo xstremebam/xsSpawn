@@ -1,0 +1,101 @@
+Installation Instruction
+
+== Client Side ==
+Step 1: Copy the xs folder to your mission root (same location as mission.sqm)
+
+Step 2: Open description.ext in your mission root folder and paste the following at the bottom and save
+
+#include "xs\spawn\Dialog\xsSpawnDefines.hpp"
+#include "xs\spawn\Dialog\xsSpawnDiaglog.hpp"
+
+Step 3: In your mission root open config.sqf and find class CfgExileCustomCode and insert the below
+
+//Spawn Selection by bambam
+ExileClient_gui_selectSpawnLocation_event_onSpawnButtonClick = "xs\spawn\Overwrites\ExileClient_gui_selectSpawnLocation_event_onSpawnButtonClick.sqf";
+ExileClient_gui_selectSpawnLocation_show = "xs\spawn\Overwrites\ExileClient_gui_selectSpawnLocation_show.sqf";
+ExileClient_gui_selectSpawnLocation_zoomToMarker = "xs\spawn\Overwrites\ExileClient_gui_selectSpawnLocation_zoomToMarker.sqf";
+ExileClient_gui_selectSpawnLocation_event_onListBoxSelectionChanged = "xs\spawn\Overwrites\ExileClient_gui_selectSpawnLocation_event_onListBoxSelectionChanged.sqf";
+ExileServer_object_player_createBambi = "xs\spawn\Overwrites\ExileServer_object_player_createBambi.sqf";
+
+For Example:
+class CfgExileCustomCode 
+{	
+	//Spawn Selection by bambam
+	ExileClient_gui_selectSpawnLocation_event_onSpawnButtonClick = "xs\spawn\Overwrites\ExileClient_gui_selectSpawnLocation_event_onSpawnButtonClick.sqf";
+	ExileClient_gui_selectSpawnLocation_show = "xs\spawn\Overwrites\ExileClient_gui_selectSpawnLocation_show.sqf";
+	ExileClient_gui_selectSpawnLocation_zoomToMarker = "xs\spawn\Overwrites\ExileClient_gui_selectSpawnLocation_zoomToMarker.sqf";
+	ExileClient_gui_selectSpawnLocation_event_onListBoxSelectionChanged = "xs\spawn\Overwrites\ExileClient_gui_selectSpawnLocation_event_onListBoxSelectionChanged.sqf";
+	ExileServer_object_player_createBambi = "xs\spawn\Overwrites\ExileServer_object_player_createBambi.sqf";
+};
+
+Step 4: Open xs\spawn\Overwrites\ExileClient_gui_selectSpawnLocation_show.sqf and at the bottom you can edit the one liners to suit your server
+Each time a player spawns it will randomly select one of these lines to display on their spawn selection screen as seen in the above screenshot.
+
+_tipTextList = selectRandom 
+[
+	"Connect to the xstreme gaming discord at discord.xstremegaming.com",
+	"Server news, comp claims and more join the communnity www.xstremegaming.com",
+	"This is a game of loss, its a wild world out there, good luck!",
+	"Enjoy the server... Please consider donating to help keep us alive",
+	"Any vehicle left inside the black safezone circle will be deleted at restart",
+	"Press 'M' key for Map in game to view Server Rules and Building Limits",
+	"Do not leave vehicles on exile base parts, at restart they will likely explode",
+	"Press the 'U' key when your loaded in to show your FPS on the Status bar"
+];
+
+Step 5: Change the logo to your logo (.paa format) & Change the Background (.paa format)
+In the \xs\spawn folder simply replace the images with your own
+- xsbackground.paa
+- xslogo.paa
+
+Only have jpegs?
+- Open \xs\spawn\Dialog\xsSpawnDiaglog.hpp
+- Locate class xsSpawnBackground: xsSpawnRscPicture (first control)
+replace: text = "xs\spawn\xsbackground.paa"; with: text = "xs\spawn\xsbackground.jpg";
+- Locate class xsSpawnLogo: xsSpawnRscPictureKeepAspect (second control)
+replace: text = "xs\spawn\xslogo.paa"; with: text = "xs\spawn\xslogo.jpg";
+- In the \xs\spawn folder insert your jpg image with the correct image names
+- xsbackground.jpg
+- xslogo.jpg
+
+== Server Side ==
+
+Step 6: Open @exileserver\addons\exile_server_config\config.cpp
+Locate class BambiSettings and make sure your settings for halo match the below
+parachuteSpawning = 1;
+haloJump = 1;
+parachuteDropHeight = 1000; (this ones up to you)
+
+Step 7: If you use infistar you will need to add the following idd number to your allowed idd list
+- Open a3_infiSTAR_Exile\EXILE_AHAT_CONFIG.hpp
+- Look for allowedIDDs[] =
+- Insert 86000,	// xsSpawn above the last number 46
+
+For Example:
+allowedIDDs[] =
+{
+	/* default idds */
+	-1,0,4,5,6,8,12,18,24,49,54,55,70,101,160,174,177,999,131,63,602,301,
+
+	/* exile idds */
+	24001,24002,20023,24005,24004,24010,24025,20021,20017,24012,24027,
+	20019,20016,24007,20024,20018,24008,24011,24015,24000,24006,24014,
+	20020,24026,4002,4000,4001,4003,1500,
+
+	24033,24030,24029,24028,24031,24034,
+
+	4004,21000,	// Bounty system and MarXet
+	8457,	// http://www.exilemod.com/topic/9040-xm8-apps/
+	65431,	// r3f menu fix
+	6666,	// Paintshop
+	0711,	// Advanced Banking
+	0720,	// Virtual Garage
+	5501,5502,5503,5504,5505,5506,5507,	// BRAma Cookbook
+	-1339,-1340,	// custom infiSTAR dialogs (some editor & a private chat menu)
+
+	86000,	// xsSpawn
+	/* main idd - never delete it */
+	46
+};
+
+That is it i hope you enjoy.
