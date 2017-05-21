@@ -26,7 +26,7 @@ class xstremeGroundorHaloDialog
 		};
 		class xsSpawnLogo: xsSpawnRscPictureKeepAspect
 		{
-			idc = 1101
+			idc = 1101;
 			x = 0.0771875 * safezoneW + safezoneX;
 			y = 0.054 * safezoneH + safezoneY;
 			w = 0.156 * safezoneW;
