@@ -103,6 +103,7 @@
 class xsSpawnRscMapControl {
 	access = 0;
 	alphaFadeEndScale = 0.4;
+	widthRailWay = 1;
 	alphaFadeStartScale = 0.35;
 	colorBackground[] = {0.969,0.957,0.949,1};
 	colorCountlines[] = {0.572,0.354,0.188,0.25};
